@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="user.mapper.ParticipateProjectMapper">
+	<resultMap id="BaseResultMap" type="user.entity.ParticipateProject">
+            <result column="participate_project_id" property="participateProjectId" />
+	        <result column="project_id" property="projectId" />
+	        <result column="tutor_id" property="tutorId" />
+	        <result column="mainwork" property="mainwork" />
+	        <result column="participate_starttime" property="participateStarttime" />
+	        <result column="participate_endtime" property="participateEndtime" />
+	        <result column="participate_approvestatus" property="participateApprovestatus" />
+	        <result column="participate_approvetime" property="participateApprovetime" />
+	        <result column="costequivalent" property="costequivalent" />
+	        <result column="isdirector" property="isdirector" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.participate_project_id
+        , t.project_id
+        , t.tutor_id
+        , t.mainwork
+        , t.participate_starttime
+        , t.participate_endtime
+        , t.participate_approvestatus
+        , t.participate_approvetime
+        , t.costequivalent
+        , t.isdirector
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM dbo.participate_project t
+	</select>
+ 
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="String">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM dbo.participate_project t
+		WHERE participate_project_id = #{participateProjectId}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="user.entity.ParticipateProject"
+		keyProperty="participateProjectId" keyColumn="participate_project_id" useGeneratedKeys="true"
+    >
+	INSERT INTO dbo.participate_project
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	    	participate_project_id,
+    	        	    	project_id,
+    	        	    	tutor_id,
+    	        	    	mainwork,
+    	        	    	participate_starttime,
+    	        	    	participate_endtime,
+    	        	    	participate_approvestatus,
+    	        	    	participate_approvetime,
+    	        	    	costequivalent,
+    	        	    	isdirector,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        #{participateProjectId},                   
+    	        	        #{projectId},                   
+    	        	        #{tutorId},                   
+    	        	        #{mainwork},                   
+    	        	        #{participateStarttime},                   
+    	        	        #{participateEndtime},                   
+    	        	        #{participateApprovestatus},                   
+    	        	        #{participateApprovetime},                   
+    	        	        #{costequivalent},                   
+    	        	        #{isdirector},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="user.entity.ParticipateProject"
+        keyProperty="participateProjectId" keyColumn="participate_project_id" useGeneratedKeys="true"
+        >
+        INSERT INTO dbo.participate_project    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                <if test="participateProjectId != null">
+                   participate_project_id,
+                    </if>
+                                                                <if test="projectId != null">
+                   project_id,
+                    </if>
+                                                                <if test="tutorId != null">
+                   tutor_id,
+                    </if>
+                                                                <if test="mainwork != null">
+                   mainwork,
+                    </if>
+                                                                <if test="participateStarttime != null">
+                   participate_starttime,
+                    </if>
+                                                                <if test="participateEndtime != null">
+                   participate_endtime,
+                    </if>
+                                                                <if test="participateApprovestatus != null">
+                   participate_approvestatus,
+                    </if>
+                                                                <if test="participateApprovetime != null">
+                   participate_approvetime,
+                    </if>
+                                                                <if test="costequivalent != null">
+                   costequivalent,
+                    </if>
+                                                                <if test="isdirector != null">
+                   isdirector,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                <if test="participateProjectId != null" >
+                    #{participateProjectId},                    
+                    </if>
+                                                                <if test="projectId != null" >
+                    #{projectId},                    
+                    </if>
+                                                                <if test="tutorId != null" >
+                    #{tutorId},                    
+                    </if>
+                                                                <if test="mainwork != null" >
+                    #{mainwork},                    
+                    </if>
+                                                                <if test="participateStarttime != null" >
+                    #{participateStarttime},                    
+                    </if>
+                                                                <if test="participateEndtime != null" >
+                    #{participateEndtime},                    
+                    </if>
+                                                                <if test="participateApprovestatus != null" >
+                    #{participateApprovestatus},                    
+                    </if>
+                                                                <if test="participateApprovetime != null" >
+                    #{participateApprovetime},                    
+                    </if>
+                                                                <if test="costequivalent != null" >
+                    #{costequivalent},                    
+                    </if>
+                                                                <if test="isdirector != null" >
+                    #{isdirector},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="user.entity.ParticipateProject">
+    UPDATE dbo.participate_project
+     <set>		
+                                     project_id=#{projectId},        
+                                tutor_id=#{tutorId},        
+                                mainwork=#{mainwork},        
+                                participate_starttime=#{participateStarttime},        
+                                participate_endtime=#{participateEndtime},        
+                                participate_approvestatus=#{participateApprovestatus},        
+                                participate_approvetime=#{participateApprovetime},        
+                                costequivalent=#{costequivalent},        
+                                isdirector=#{isdirector},        
+                   </set>	
+    WHERE participate_project_id = #{participateProjectId}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="user.entity.ParticipateProject">
+    UPDATE dbo.participate_project
+    <set>
+    	                                                <if test="projectId != null" >
+                project_id=#{projectId},                 
+                </if>
+                                                <if test="tutorId != null" >
+                tutor_id=#{tutorId},                 
+                </if>
+                                                <if test="mainwork != null" >
+                mainwork=#{mainwork},                 
+                </if>
+                                                <if test="participateStarttime != null" >
+                participate_starttime=#{participateStarttime},                 
+                </if>
+                                                <if test="participateEndtime != null" >
+                participate_endtime=#{participateEndtime},                 
+                </if>
+                                                <if test="participateApprovestatus != null" >
+                participate_approvestatus=#{participateApprovestatus},                 
+                </if>
+                                                <if test="participateApprovetime != null" >
+                participate_approvetime=#{participateApprovetime},                 
+                </if>
+                                                <if test="costequivalent != null" >
+                costequivalent=#{costequivalent},                 
+                </if>
+                                                <if test="isdirector != null" >
+                isdirector=#{isdirector},                 
+                </if>
+                        </set>
+    WHERE participate_project_id = #{participateProjectId}
+    </update>
+
+		
+	<!-- 根据主键删除记录 -->
+	<delete id="delete" parameterType="user.entity.ParticipateProject">
+		UPDATE dbo.participate_project
+		SET is_deleted=1
+		WHERE participate_project_id = #{participateProjectId}
+	</delete>
+
+
+</mapper>

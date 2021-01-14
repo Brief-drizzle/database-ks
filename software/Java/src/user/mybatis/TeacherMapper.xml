@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="user.mapper.TeacherMapper">
+	<resultMap id="BaseResultMap" type="user.entity.Teacher">
+            <result column="teacher_id" property="teacherId" />
+	        <result column="teacher_name" property="teacherName" />
+	        <result column="teacher_status" property="teacherStatus" />
+	        <result column="teacher_phone" property="teacherPhone" />
+	        <result column="teacher_birth" property="teacherBirth" />
+	        <result column="teacher_email" property="teacherEmail" />
+	        <result column="teacher_sex" property="teacherSex" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.teacher_id
+        , t.teacher_name
+        , t.teacher_status
+        , t.teacher_phone
+        , t.teacher_birth
+        , t.teacher_email
+        , t.teacher_sex
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM dbo.teacher t
+	</select>
+ 
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="String">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM dbo.teacher t
+		WHERE teacher_id = #{teacherId}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="user.entity.Teacher"
+		keyProperty="teacherId" keyColumn="teacher_id" useGeneratedKeys="true"
+    >
+	INSERT INTO dbo.teacher
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	    	teacher_id,
+    	        	    	teacher_name,
+    	        	    	teacher_status,
+    	        	    	teacher_phone,
+    	        	    	teacher_birth,
+    	        	    	teacher_email,
+    	        	    	teacher_sex,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        #{teacherId},                   
+    	        	        #{teacherName},                   
+    	        	        #{teacherStatus},                   
+    	        	        #{teacherPhone},                   
+    	        	        #{teacherBirth},                   
+    	        	        #{teacherEmail},                   
+    	        	        #{teacherSex},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="user.entity.Teacher"
+        keyProperty="teacherId" keyColumn="teacher_id" useGeneratedKeys="true"
+        >
+        INSERT INTO dbo.teacher    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                <if test="teacherId != null">
+                   teacher_id,
+                    </if>
+                                                                <if test="teacherName != null">
+                   teacher_name,
+                    </if>
+                                                                <if test="teacherStatus != null">
+                   teacher_status,
+                    </if>
+                                                                <if test="teacherPhone != null">
+                   teacher_phone,
+                    </if>
+                                                                <if test="teacherBirth != null">
+                   teacher_birth,
+                    </if>
+                                                                <if test="teacherEmail != null">
+                   teacher_email,
+                    </if>
+                                                                <if test="teacherSex != null">
+                   teacher_sex,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                <if test="teacherId != null" >
+                    #{teacherId},                    
+                    </if>
+                                                                <if test="teacherName != null" >
+                    #{teacherName},                    
+                    </if>
+                                                                <if test="teacherStatus != null" >
+                    #{teacherStatus},                    
+                    </if>
+                                                                <if test="teacherPhone != null" >
+                    #{teacherPhone},                    
+                    </if>
+                                                                <if test="teacherBirth != null" >
+                    #{teacherBirth},                    
+                    </if>
+                                                                <if test="teacherEmail != null" >
+                    #{teacherEmail},                    
+                    </if>
+                                                                <if test="teacherSex != null" >
+                    #{teacherSex},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="user.entity.Teacher">
+    UPDATE dbo.teacher
+     <set>		
+                                     teacher_name=#{teacherName},        
+                                teacher_status=#{teacherStatus},        
+                                teacher_phone=#{teacherPhone},        
+                                teacher_birth=#{teacherBirth},        
+                                teacher_email=#{teacherEmail},        
+                                teacher_sex=#{teacherSex},        
+                   </set>	
+    WHERE teacher_id = #{teacherId}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="user.entity.Teacher">
+    UPDATE dbo.teacher
+    <set>
+    	                                                <if test="teacherName != null" >
+                teacher_name=#{teacherName},                 
+                </if>
+                                                <if test="teacherStatus != null" >
+                teacher_status=#{teacherStatus},                 
+                </if>
+                                                <if test="teacherPhone != null" >
+                teacher_phone=#{teacherPhone},                 
+                </if>
+                                                <if test="teacherBirth != null" >
+                teacher_birth=#{teacherBirth},                 
+                </if>
+                                                <if test="teacherEmail != null" >
+                teacher_email=#{teacherEmail},                 
+                </if>
+                                                <if test="teacherSex != null" >
+                teacher_sex=#{teacherSex},                 
+                </if>
+                        </set>
+    WHERE teacher_id = #{teacherId}
+    </update>
+
+		
+	<!-- 根据主键删除记录 -->
+	<delete id="delete" parameterType="user.entity.Teacher">
+		UPDATE dbo.teacher
+		SET is_deleted=1
+		WHERE teacher_id = #{teacherId}
+	</delete>
+
+
+</mapper>

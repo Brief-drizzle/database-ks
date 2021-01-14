@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="user.mapper.UserMapper">
+	<resultMap id="BaseResultMap" type="user.entity.User">
+            <result column="userid" property="userid" />
+	        <result column="usercategory_id" property="usercategoryId" />
+	        <result column="password" property="password" />
+	        <result column="lastlogintime" property="lastlogintime" />
+	        <result column="lastloginip" property="lastloginip" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.userid
+        , t.usercategory_id
+        , t.password
+        , t.lastlogintime
+        , t.lastloginip
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM dbo.user t
+	</select>
+ 
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="String">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM dbo.user t
+		WHERE userid = #{userid}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="user.entity.User"
+		keyProperty="userid" keyColumn="userid" useGeneratedKeys="true"
+    >
+	INSERT INTO dbo.user
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	    	userid,
+    	        	    	usercategory_id,
+    	        	    	password,
+    	        	    	lastlogintime,
+    	        	    	lastloginip,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        #{userid},                   
+    	        	        #{usercategoryId},                   
+    	        	        #{password},                   
+    	        	        #{lastlogintime},                   
+    	        	        #{lastloginip},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="user.entity.User"
+        keyProperty="userid" keyColumn="userid" useGeneratedKeys="true"
+        >
+        INSERT INTO dbo.user    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                <if test="userid != null">
+                   userid,
+                    </if>
+                                                                <if test="usercategoryId != null">
+                   usercategory_id,
+                    </if>
+                                                                <if test="password != null">
+                   password,
+                    </if>
+                                                                <if test="lastlogintime != null">
+                   lastlogintime,
+                    </if>
+                                                                <if test="lastloginip != null">
+                   lastloginip,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                <if test="userid != null" >
+                    #{userid},                    
+                    </if>
+                                                                <if test="usercategoryId != null" >
+                    #{usercategoryId},                    
+                    </if>
+                                                                <if test="password != null" >
+                    #{password},                    
+                    </if>
+                                                                <if test="lastlogintime != null" >
+                    #{lastlogintime},                    
+                    </if>
+                                                                <if test="lastloginip != null" >
+                    #{lastloginip},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="user.entity.User">
+    UPDATE dbo.user
+     <set>		
+                                     usercategory_id=#{usercategoryId},        
+                                password=#{password},        
+                                lastlogintime=#{lastlogintime},        
+                                lastloginip=#{lastloginip},        
+                   </set>	
+    WHERE userid = #{userid}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="user.entity.User">
+    UPDATE dbo.user
+    <set>
+    	                                                <if test="usercategoryId != null" >
+                usercategory_id=#{usercategoryId},                 
+                </if>
+                                                <if test="password != null" >
+                password=#{password},                 
+                </if>
+                                                <if test="lastlogintime != null" >
+                lastlogintime=#{lastlogintime},                 
+                </if>
+                                                <if test="lastloginip != null" >
+                lastloginip=#{lastloginip},                 
+                </if>
+                        </set>
+    WHERE userid = #{userid}
+    </update>
+
+		
+	<!-- 根据主键删除记录 -->
+	<delete id="delete" parameterType="user.entity.User">
+		UPDATE dbo.user
+		SET is_deleted=1
+		WHERE userid = #{userid}
+	</delete>
+
+
+</mapper>

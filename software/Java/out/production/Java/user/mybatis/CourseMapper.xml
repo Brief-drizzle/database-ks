@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="user.mapper.CourseMapper">
+	<resultMap id="BaseResultMap" type="user.entity.Course">
+            <result column="course_id" property="courseId" />
+	        <result column="course_name" property="courseName" />
+	        <result column="course_nature" property="courseNature" />
+	        <result column="course_starttime" property="courseStarttime" />
+	        <result column="course_endtime" property="courseEndtime" />
+	        <result column="course_audience" property="courseAudience" />
+	        <result column="course_studentnum" property="courseStudentnum" />
+	        <result column="course_teachtime" property="courseTeachtime" />
+		</resultMap>
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+        t.course_id
+        , t.course_name
+        , t.course_nature
+        , t.course_starttime
+        , t.course_endtime
+        , t.course_audience
+        , t.course_studentnum
+        , t.course_teachtime
+        </sql>
+
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT
+        	<include refid="baseColumns" />
+		FROM dbo.course t
+	</select>
+
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="String">
+		SELECT
+        	<include refid="baseColumns" />
+		FROM dbo.course t
+		WHERE course_id = #{courseId}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="user.entity.Course"
+		keyProperty="courseId" keyColumn="course_id" useGeneratedKeys="true"
+    >
+	INSERT INTO dbo.course
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        	    	course_id,
+    	        	    	course_name,
+    	        	    	course_nature,
+    	        	    	course_starttime,
+    	        	    	course_endtime,
+    	        	    	course_audience,
+    	        	    	course_studentnum,
+    	        	    	course_teachtime,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+        	        #{courseId},
+    	        	        #{courseName},
+    	        	        #{courseNature},
+    	        	        #{courseStarttime},
+    	        	        #{courseEndtime},
+    	        	        #{courseAudience},
+    	        	        #{courseStudentnum},
+    	        	        #{courseTeachtime},
+    	        </trim>
+	</insert>
+
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="user.entity.Course"
+        keyProperty="courseId" keyColumn="course_id" useGeneratedKeys="true"
+        >
+        INSERT INTO dbo.course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+                                                <if test="courseId != null">
+                   course_id,
+                    </if>
+                                                                <if test="courseName != null">
+                   course_name,
+                    </if>
+                                                                <if test="courseNature != null">
+                   course_nature,
+                    </if>
+                                                                <if test="courseStarttime != null">
+                   course_starttime,
+                    </if>
+                                                                <if test="courseEndtime != null">
+                   course_endtime,
+                    </if>
+                                                                <if test="courseAudience != null">
+                   course_audience,
+                    </if>
+                                                                <if test="courseStudentnum != null">
+                   course_studentnum,
+                    </if>
+                                                                <if test="courseTeachtime != null">
+                   course_teachtime,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+                                                <if test="courseId != null" >
+                    #{courseId},
+                    </if>
+                                                                <if test="courseName != null" >
+                    #{courseName},
+                    </if>
+                                                                <if test="courseNature != null" >
+                    #{courseNature},
+                    </if>
+                                                                <if test="courseStarttime != null" >
+                    #{courseStarttime},
+                    </if>
+                                                                <if test="courseEndtime != null" >
+                    #{courseEndtime},
+                    </if>
+                                                                <if test="courseAudience != null" >
+                    #{courseAudience},
+                    </if>
+                                                                <if test="courseStudentnum != null" >
+                    #{courseStudentnum},
+                    </if>
+                                                                <if test="courseTeachtime != null" >
+                    #{courseTeachtime},
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="user.entity.Course">
+    UPDATE dbo.course
+     <set>
+                                     course_name=#{courseName},
+                                course_nature=#{courseNature},
+                                course_starttime=#{courseStarttime},
+                                course_endtime=#{courseEndtime},
+                                course_audience=#{courseAudience},
+                                course_studentnum=#{courseStudentnum},
+                                course_teachtime=#{courseTeachtime},
+                   </set>
+    WHERE course_id = #{courseId}
+    </update>
+
+
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="user.entity.Course">
+    UPDATE dbo.course
+    <set>
+    	                                                <if test="courseName != null" >
+                course_name=#{courseName},
+                </if>
+                                                <if test="courseNature != null" >
+                course_nature=#{courseNature},
+                </if>
+                                                <if test="courseStarttime != null" >
+                course_starttime=#{courseStarttime},
+                </if>
+                                                <if test="courseEndtime != null" >
+                course_endtime=#{courseEndtime},
+                </if>
+                                                <if test="courseAudience != null" >
+                course_audience=#{courseAudience},
+                </if>
+                                                <if test="courseStudentnum != null" >
+                course_studentnum=#{courseStudentnum},
+                </if>
+                                                <if test="courseTeachtime != null" >
+                course_teachtime=#{courseTeachtime},
+                </if>
+                        </set>
+    WHERE course_id = #{courseId}
+    </update>
+
+
+	<!-- 根据主键删除记录 -->
+	<delete id="delete" parameterType="user.entity.Course">
+		UPDATE dbo.course
+		SET is_deleted=1
+		WHERE course_id = #{courseId}
+	</delete>
+
+
+</mapper>

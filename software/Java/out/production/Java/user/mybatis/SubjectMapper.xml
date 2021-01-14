@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="user.mapper.SubjectMapper">
+	<resultMap id="BaseResultMap" type="user.entity.Subject">
+            <result column="subject_id" property="subjectId" />
+	        <result column="director_id" property="directorId" />
+	        <result column="subject_name" property="subjectName" />
+	        <result column="subject_categoryname" property="subjectCategoryname" />
+	        <result column="subject_introduction" property="subjectIntroduction" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.subject_id
+        , t.director_id
+        , t.subject_name
+        , t.subject_categoryname
+        , t.subject_introduction
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM dbo.subject t
+	</select>
+ 
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="String">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM dbo.subject t
+		WHERE subject_id = #{subjectId}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="user.entity.Subject"
+		keyProperty="subjectId" keyColumn="subject_id" useGeneratedKeys="true"
+    >
+	INSERT INTO dbo.subject
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	    	subject_id,
+    	        	    	director_id,
+    	        	    	subject_name,
+    	        	    	subject_categoryname,
+    	        	    	subject_introduction,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        #{subjectId},                   
+    	        	        #{directorId},                   
+    	        	        #{subjectName},                   
+    	        	        #{subjectCategoryname},                   
+    	        	        #{subjectIntroduction},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="user.entity.Subject"
+        keyProperty="subjectId" keyColumn="subject_id" useGeneratedKeys="true"
+        >
+        INSERT INTO dbo.subject    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                <if test="subjectId != null">
+                   subject_id,
+                    </if>
+                                                                <if test="directorId != null">
+                   director_id,
+                    </if>
+                                                                <if test="subjectName != null">
+                   subject_name,
+                    </if>
+                                                                <if test="subjectCategoryname != null">
+                   subject_categoryname,
+                    </if>
+                                                                <if test="subjectIntroduction != null">
+                   subject_introduction,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                <if test="subjectId != null" >
+                    #{subjectId},                    
+                    </if>
+                                                                <if test="directorId != null" >
+                    #{directorId},                    
+                    </if>
+                                                                <if test="subjectName != null" >
+                    #{subjectName},                    
+                    </if>
+                                                                <if test="subjectCategoryname != null" >
+                    #{subjectCategoryname},                    
+                    </if>
+                                                                <if test="subjectIntroduction != null" >
+                    #{subjectIntroduction},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="user.entity.Subject">
+    UPDATE dbo.subject
+     <set>		
+                                     director_id=#{directorId},        
+                                subject_name=#{subjectName},        
+                                subject_categoryname=#{subjectCategoryname},        
+                                subject_introduction=#{subjectIntroduction},        
+                   </set>	
+    WHERE subject_id = #{subjectId}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="user.entity.Subject">
+    UPDATE dbo.subject
+    <set>
+    	                                                <if test="directorId != null" >
+                director_id=#{directorId},                 
+                </if>
+                                                <if test="subjectName != null" >
+                subject_name=#{subjectName},                 
+                </if>
+                                                <if test="subjectCategoryname != null" >
+                subject_categoryname=#{subjectCategoryname},                 
+                </if>
+                                                <if test="subjectIntroduction != null" >
+                subject_introduction=#{subjectIntroduction},                 
+                </if>
+                        </set>
+    WHERE subject_id = #{subjectId}
+    </update>
+
+		
+	<!-- 根据主键删除记录 -->
+	<delete id="delete" parameterType="user.entity.Subject">
+		UPDATE dbo.subject
+		SET is_deleted=1
+		WHERE subject_id = #{subjectId}
+	</delete>
+
+
+</mapper>

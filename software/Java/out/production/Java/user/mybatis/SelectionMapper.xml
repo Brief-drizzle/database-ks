@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="user.mapper.SelectionMapper">
+	<resultMap id="BaseResultMap" type="user.entity.Selection">
+            <result column="selection_id" property="selectionId" />
+	        <result column="postgraduate_id" property="postgraduateId" />
+	        <result column="course_id" property="courseId" />
+	        <result column="selection_time" property="selectionTime" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.selection_id
+        , t.postgraduate_id
+        , t.course_id
+        , t.selection_time
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM dbo.selection t
+	</select>
+ 
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="String">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM dbo.selection t
+		WHERE selection_id = #{selectionId}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="user.entity.Selection"
+		keyProperty="selectionId" keyColumn="selection_id" useGeneratedKeys="true"
+    >
+	INSERT INTO dbo.selection
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	    	selection_id,
+    	        	    	postgraduate_id,
+    	        	    	course_id,
+    	        	    	selection_time,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        #{selectionId},                   
+    	        	        #{postgraduateId},                   
+    	        	        #{courseId},                   
+    	        	        #{selectionTime},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="user.entity.Selection"
+        keyProperty="selectionId" keyColumn="selection_id" useGeneratedKeys="true"
+        >
+        INSERT INTO dbo.selection    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                <if test="selectionId != null">
+                   selection_id,
+                    </if>
+                                                                <if test="postgraduateId != null">
+                   postgraduate_id,
+                    </if>
+                                                                <if test="courseId != null">
+                   course_id,
+                    </if>
+                                                                <if test="selectionTime != null">
+                   selection_time,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                <if test="selectionId != null" >
+                    #{selectionId},                    
+                    </if>
+                                                                <if test="postgraduateId != null" >
+                    #{postgraduateId},                    
+                    </if>
+                                                                <if test="courseId != null" >
+                    #{courseId},                    
+                    </if>
+                                                                <if test="selectionTime != null" >
+                    #{selectionTime},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="user.entity.Selection">
+    UPDATE dbo.selection
+     <set>		
+                                     postgraduate_id=#{postgraduateId},        
+                                course_id=#{courseId},        
+                                selection_time=#{selectionTime},        
+                   </set>	
+    WHERE selection_id = #{selectionId}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="user.entity.Selection">
+    UPDATE dbo.selection
+    <set>
+    	                                                <if test="postgraduateId != null" >
+                postgraduate_id=#{postgraduateId},                 
+                </if>
+                                                <if test="courseId != null" >
+                course_id=#{courseId},                 
+                </if>
+                                                <if test="selectionTime != null" >
+                selection_time=#{selectionTime},                 
+                </if>
+                        </set>
+    WHERE selection_id = #{selectionId}
+    </update>
+
+		
+	<!-- 根据主键删除记录 -->
+	<delete id="delete" parameterType="user.entity.Selection">
+		UPDATE dbo.selection
+		SET is_deleted=1
+		WHERE selection_id = #{selectionId}
+	</delete>
+
+
+</mapper>

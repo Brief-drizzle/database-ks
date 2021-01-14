@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="user.mapper.AcademicExchangeMapper">
+	<resultMap id="BaseResultMap" type="user.entity.AcademicExchange">
+            <result column="academic_exchange_id" property="academicExchangeId" />
+	        <result column="administrator_id" property="administratorId" />
+	        <result column="postgraduate_id" property="postgraduateId" />
+	        <result column="tutor_id" property="tutorId" />
+	        <result column="director_id" property="directorId" />
+	        <result column="academic_exchange_name" property="academicExchangeName" />
+	        <result column="report_englishname" property="reportEnglishname" />
+	        <result column="report_chinesename" property="reportChinesename" />
+	        <result column="country" property="country" />
+	        <result column="province" property="province" />
+	        <result column="city" property="city" />
+	        <result column="quality" property="quality" />
+	        <result column="activity_photo" property="activityPhoto" />
+	        <result column="others" property="others" />
+	        <result column="audit_status" property="auditStatus" />
+	        <result column="tutor_audit_time" property="tutorAuditTime" />
+	        <result column="director_audit_time" property="directorAuditTime" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.academic_exchange_id
+        , t.administrator_id
+        , t.postgraduate_id
+        , t.tutor_id
+        , t.director_id
+        , t.academic_exchange_name
+        , t.report_englishname
+        , t.report_chinesename
+        , t.country
+        , t.province
+        , t.city
+        , t.quality
+        , t.activity_photo
+        , t.others
+        , t.audit_status
+        , t.tutor_audit_time
+        , t.director_audit_time
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM dbo.academic_exchange t
+	</select>
+ 
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="String">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM dbo.academic_exchange t
+		WHERE academic_exchange_id = #{academicExchangeId}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="user.entity.AcademicExchange"
+		keyProperty="academicExchangeId" keyColumn="academic_exchange_id" useGeneratedKeys="true"
+    >
+	INSERT INTO dbo.academic_exchange
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	    	academic_exchange_id,
+    	        	    	administrator_id,
+    	        	    	postgraduate_id,
+    	        	    	tutor_id,
+    	        	    	director_id,
+    	        	    	academic_exchange_name,
+    	        	    	report_englishname,
+    	        	    	report_chinesename,
+    	        	    	country,
+    	        	    	province,
+    	        	    	city,
+    	        	    	quality,
+    	        	    	activity_photo,
+    	        	    	others,
+    	        	    	audit_status,
+    	        	    	tutor_audit_time,
+    	        	    	director_audit_time,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        #{academicExchangeId},                   
+    	        	        #{administratorId},                   
+    	        	        #{postgraduateId},                   
+    	        	        #{tutorId},                   
+    	        	        #{directorId},                   
+    	        	        #{academicExchangeName},                   
+    	        	        #{reportEnglishname},                   
+    	        	        #{reportChinesename},                   
+    	        	        #{country},                   
+    	        	        #{province},                   
+    	        	        #{city},                   
+    	        	        #{quality},                   
+    	        	        #{activityPhoto},                   
+    	        	        #{others},                   
+    	        	        #{auditStatus},                   
+    	        	        #{tutorAuditTime},                   
+    	        	        #{directorAuditTime},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="user.entity.AcademicExchange"
+        keyProperty="academicExchangeId" keyColumn="academic_exchange_id" useGeneratedKeys="true"
+        >
+        INSERT INTO dbo.academic_exchange    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                <if test="academicExchangeId != null">
+                   academic_exchange_id,
+                    </if>
+                                                                <if test="administratorId != null">
+                   administrator_id,
+                    </if>
+                                                                <if test="postgraduateId != null">
+                   postgraduate_id,
+                    </if>
+                                                                <if test="tutorId != null">
+                   tutor_id,
+                    </if>
+                                                                <if test="directorId != null">
+                   director_id,
+                    </if>
+                                                                <if test="academicExchangeName != null">
+                   academic_exchange_name,
+                    </if>
+                                                                <if test="reportEnglishname != null">
+                   report_englishname,
+                    </if>
+                                                                <if test="reportChinesename != null">
+                   report_chinesename,
+                    </if>
+                                                                <if test="country != null">
+                   country,
+                    </if>
+                                                                <if test="province != null">
+                   province,
+                    </if>
+                                                                <if test="city != null">
+                   city,
+                    </if>
+                                                                <if test="quality != null">
+                   quality,
+                    </if>
+                                                                <if test="activityPhoto != null">
+                   activity_photo,
+                    </if>
+                                                                <if test="others != null">
+                   others,
+                    </if>
+                                                                <if test="auditStatus != null">
+                   audit_status,
+                    </if>
+                                                                <if test="tutorAuditTime != null">
+                   tutor_audit_time,
+                    </if>
+                                                                <if test="directorAuditTime != null">
+                   director_audit_time,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                <if test="academicExchangeId != null" >
+                    #{academicExchangeId},                    
+                    </if>
+                                                                <if test="administratorId != null" >
+                    #{administratorId},                    
+                    </if>
+                                                                <if test="postgraduateId != null" >
+                    #{postgraduateId},                    
+                    </if>
+                                                                <if test="tutorId != null" >
+                    #{tutorId},                    
+                    </if>
+                                                                <if test="directorId != null" >
+                    #{directorId},                    
+                    </if>
+                                                                <if test="academicExchangeName != null" >
+                    #{academicExchangeName},                    
+                    </if>
+                                                                <if test="reportEnglishname != null" >
+                    #{reportEnglishname},                    
+                    </if>
+                                                                <if test="reportChinesename != null" >
+                    #{reportChinesename},                    
+                    </if>
+                                                                <if test="country != null" >
+                    #{country},                    
+                    </if>
+                                                                <if test="province != null" >
+                    #{province},                    
+                    </if>
+                                                                <if test="city != null" >
+                    #{city},                    
+                    </if>
+                                                                <if test="quality != null" >
+                    #{quality},                    
+                    </if>
+                                                                <if test="activityPhoto != null" >
+                    #{activityPhoto},                    
+                    </if>
+                                                                <if test="others != null" >
+                    #{others},                    
+                    </if>
+                                                                <if test="auditStatus != null" >
+                    #{auditStatus},                    
+                    </if>
+                                                                <if test="tutorAuditTime != null" >
+                    #{tutorAuditTime},                    
+                    </if>
+                                                                <if test="directorAuditTime != null" >
+                    #{directorAuditTime},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="user.entity.AcademicExchange">
+    UPDATE dbo.academic_exchange
+     <set>		
+                                     administrator_id=#{administratorId},        
+                                postgraduate_id=#{postgraduateId},        
+                                tutor_id=#{tutorId},        
+                                director_id=#{directorId},        
+                                academic_exchange_name=#{academicExchangeName},        
+                                report_englishname=#{reportEnglishname},        
+                                report_chinesename=#{reportChinesename},        
+                                country=#{country},        
+                                province=#{province},        
+                                city=#{city},        
+                                quality=#{quality},        
+                                activity_photo=#{activityPhoto},        
+                                others=#{others},        
+                                audit_status=#{auditStatus},        
+                                tutor_audit_time=#{tutorAuditTime},        
+                                director_audit_time=#{directorAuditTime},        
+                   </set>	
+    WHERE academic_exchange_id = #{academicExchangeId}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="user.entity.AcademicExchange">
+    UPDATE dbo.academic_exchange
+    <set>
+    	                                                <if test="administratorId != null" >
+                administrator_id=#{administratorId},                 
+                </if>
+                                                <if test="postgraduateId != null" >
+                postgraduate_id=#{postgraduateId},                 
+                </if>
+                                                <if test="tutorId != null" >
+                tutor_id=#{tutorId},                 
+                </if>
+                                                <if test="directorId != null" >
+                director_id=#{directorId},                 
+                </if>
+                                                <if test="academicExchangeName != null" >
+                academic_exchange_name=#{academicExchangeName},                 
+                </if>
+                                                <if test="reportEnglishname != null" >
+                report_englishname=#{reportEnglishname},                 
+                </if>
+                                                <if test="reportChinesename != null" >
+                report_chinesename=#{reportChinesename},                 
+                </if>
+                                                <if test="country != null" >
+                country=#{country},                 
+                </if>
+                                                <if test="province != null" >
+                province=#{province},                 
+                </if>
+                                                <if test="city != null" >
+                city=#{city},                 
+                </if>
+                                                <if test="quality != null" >
+                quality=#{quality},                 
+                </if>
+                                                <if test="activityPhoto != null" >
+                activity_photo=#{activityPhoto},                 
+                </if>
+                                                <if test="others != null" >
+                others=#{others},                 
+                </if>
+                                                <if test="auditStatus != null" >
+                audit_status=#{auditStatus},                 
+                </if>
+                                                <if test="tutorAuditTime != null" >
+                tutor_audit_time=#{tutorAuditTime},                 
+                </if>
+                                                <if test="directorAuditTime != null" >
+                director_audit_time=#{directorAuditTime},                 
+                </if>
+                        </set>
+    WHERE academic_exchange_id = #{academicExchangeId}
+    </update>
+
+		
+	<!-- 根据主键删除记录 -->
+	<delete id="delete" parameterType="user.entity.AcademicExchange">
+		UPDATE dbo.academic_exchange
+		SET is_deleted=1
+		WHERE academic_exchange_id = #{academicExchangeId}
+	</delete>
+
+
+</mapper>
