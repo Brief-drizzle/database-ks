@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="user.mapper.CategoryMapper">
+<mapper namespace="user.dao.CategoryMapper">
 	<resultMap id="BaseResultMap" type="user.entity.Category">
             <result column="category_id" property="categoryId" />
 	        <result column="category_name" property="categoryName" />
