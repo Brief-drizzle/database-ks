@@ -1,7 +1,9 @@
 package user.dao;
 
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import user.entity.AssistantChose;
 
 @Mapper
@@ -21,8 +23,9 @@ public interface AssistantChoseMapper {
      * @param id 主键
      * @return 返回记录，没有返回null
      */
-	AssistantChose getById(String courseId);
-	
+	AssistantChose getById(@Param("courseId") String courseId,@Param("assessment_id") String assessment_id);
+	int assistantnum(String teacherid);
+	int post_assistantnum(@Param("subjectid") String subjectid, @Param("start") Date starttime, @Param("end") Date endtime);
 	/**
      * 新增，插入所有字段
      *
@@ -30,7 +33,7 @@ public interface AssistantChoseMapper {
      * @return 返回影响行数
      */
 	int insert(AssistantChose assistantChose);
-	
+
 	/**
      * 新增，忽略null字段
      *
@@ -38,7 +41,6 @@ public interface AssistantChoseMapper {
      * @return 返回影响行数
      */
 	int insertIgnoreNull(AssistantChose assistantChose);
-	
 	/**
      * 修改，修改所有字段
      *

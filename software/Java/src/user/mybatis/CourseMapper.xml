@@ -30,6 +30,24 @@
         	<include refid="baseColumns" />
 		FROM dbo.course t
 	</select>
+    <select id="listAllBySubjectTime" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM dbo.course,dbo.teacher_subject,dbo.postgraduate,dbo.assistant_assessment,dbo.assistant_chose
+        where course_starttime>=#{start} and #{end}>=course_endtime and
+            courseid in(select courseid from dbo.assistant_chose
+            where assessment_id in(
+                select assessment_id from dbo.assistant_assessment
+                where postgraduate_id in(
+                    select postgraduate_id from dbo.postgraduate
+                    where teacher_id in(
+                        select teacher_id from dbo.teacher_subject
+                        where subject_id=#{subjectid}
+                                        )
+                                        )
+                                    )
+                        )
+    </select>
 
  	<!-- 根据主键获取单条记录 -->
     <select id="getById" resultMap="BaseResultMap" parameterType="String">

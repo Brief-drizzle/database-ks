@@ -18,7 +18,7 @@ public interface InstructorMapper {
 	/**
      * 根据主键查询
      *
-     * @param id 主键
+     * @param instructorId 主键
      * @return 返回记录，没有返回null
      */
 	Instructor getById(String instructorId);

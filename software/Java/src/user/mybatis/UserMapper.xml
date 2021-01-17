@@ -33,6 +33,13 @@
 		WHERE userid = #{userid}
 	</select>
 
+    <select id="log" resultMap="BaseResultMap" parameterType="String">
+        SELECT
+        <include refid="baseColumns" />
+        FROM dbo.user t
+        WHERE userid = #{userid} and password = #{password}
+    </select>
+
 	<!-- 插入全部字段 -->
     <insert id="insert" parameterType="user.entity.User"
 		keyProperty="userid" keyColumn="userid" useGeneratedKeys="true"
@@ -61,50 +68,50 @@
         INSERT INTO dbo.user    
         <trim prefix="(" suffix=")" suffixOverrides=",">	 
 
-                                                <if test="userid != null">
+            <if test="userid != null">
                    userid,
-                    </if>
-                                                                <if test="usercategoryId != null">
+            </if>
+            <if test="usercategoryId != null">
                    usercategory_id,
-                    </if>
-                                                                <if test="password != null">
+            </if>
+            <if test="password != null">
                    password,
-                    </if>
-                                                                <if test="lastlogintime != null">
+            </if>
+            <if test="lastlogintime != null">
                    lastlogintime,
-                    </if>
-                                                                <if test="lastloginip != null">
+            </if>
+            <if test="lastloginip != null">
                    lastloginip,
-                    </if>
-                                    </trim>
+            </if>
+        </trim>
         <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
-                                                <if test="userid != null" >
+            <if test="userid != null" >
                     #{userid},                    
-                    </if>
-                                                                <if test="usercategoryId != null" >
+            </if>
+            <if test="usercategoryId != null" >
                     #{usercategoryId},                    
-                    </if>
-                                                                <if test="password != null" >
+            </if>
+            <if test="password != null" >
                     #{password},                    
-                    </if>
-                                                                <if test="lastlogintime != null" >
+            </if>
+            <if test="lastlogintime != null" >
                     #{lastlogintime},                    
-                    </if>
-                                                                <if test="lastloginip != null" >
+            </if>
+            <if test="lastloginip != null" >
                     #{lastloginip},                    
-                    </if>
-                                    </trim>
+            </if>
+        </trim>
     </insert>
 
 	<!-- 更新,更新全部字段 -->
     <update id="update" parameterType="user.entity.User">
     UPDATE dbo.user
      <set>		
-                                     usercategory_id=#{usercategoryId},        
-                                password=#{password},        
-                                lastlogintime=#{lastlogintime},        
-                                lastloginip=#{lastloginip},        
-                   </set>	
+        usercategory_id=#{usercategoryId},
+        password=#{password},
+        lastlogintime=#{lastlogintime},
+        lastloginip=#{lastloginip},
+     </set>
     WHERE userid = #{userid}
     </update>  
     
@@ -113,19 +120,19 @@
     <update id="updateIgnoreNull" parameterType="user.entity.User">
     UPDATE dbo.user
     <set>
-    	                                                <if test="usercategoryId != null" >
+        <if test="usercategoryId != null" >
                 usercategory_id=#{usercategoryId},                 
-                </if>
-                                                <if test="password != null" >
+        </if>
+        <if test="password != null" >
                 password=#{password},                 
-                </if>
-                                                <if test="lastlogintime != null" >
+        </if>
+        <if test="lastlogintime != null" >
                 lastlogintime=#{lastlogintime},                 
-                </if>
-                                                <if test="lastloginip != null" >
+        </if>
+        <if test="lastloginip != null" >
                 lastloginip=#{lastloginip},                 
-                </if>
-                        </set>
+        </if>
+    </set>
     WHERE userid = #{userid}
     </update>
 

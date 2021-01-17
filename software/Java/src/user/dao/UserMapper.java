@@ -2,6 +2,7 @@ package user.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import user.entity.User;
 
 @Mapper
@@ -18,11 +19,11 @@ public interface UserMapper {
 	/**
      * 根据主键查询
      *
-     * @param id 主键
+     * @param userid 主键
      * @return 返回记录，没有返回null
      */
 	User getById(String userid);
-	
+	User log(@Param("userid") String userid, @Param("password") String password);
 	/**
      * 新增，插入所有字段
      *

@@ -1,7 +1,9 @@
 package user.dao;
 
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import user.entity.Course;
 
 @Mapper
@@ -13,16 +15,15 @@ public interface CourseMapper {
      * @return 返回集合，没有返回空List
      */
 	List<Course> listAll();
-
+	List<Course> listAllBySubjectTime(@Param("subjectid") String subjectid, @Param("start") Date starttime, @Param("end") Date endtime);
 
 	/**
      * 根据主键查询
      *
-     * @param id 主键
+     * @param courseId 主键
      * @return 返回记录，没有返回null
      */
 	Course getById(String courseId);
-	
 	/**
      * 新增，插入所有字段
      *
