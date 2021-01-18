@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="user.mapper.TeacherSubjectMapper">
+<mapper namespace="user.dao.TeacherSubjectMapper">
 	<resultMap id="BaseResultMap" type="user.entity.TeacherSubject">
             <result column="subject_id" property="subjectId" />
 	        <result column="teacher_id" property="teacherId" />

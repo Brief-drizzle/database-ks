@@ -33,7 +33,7 @@
 		WHERE userid = #{userid}
 	</select>
 
-    <select id="log" resultMap="BaseResultMap" parameterType="String">
+    <select id="log" resultMap="BaseResultMap">
         SELECT
         <include refid="baseColumns" />
         FROM dbo.user t

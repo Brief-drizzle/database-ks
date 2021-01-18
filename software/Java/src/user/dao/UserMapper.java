@@ -23,7 +23,7 @@ public interface UserMapper {
      * @return 返回记录，没有返回null
      */
 	User getById(String userid);
-	User log(@Param("userid") String userid, @Param("password") String password);
+	User log(@Param("userid")String userid, @Param("password")String password);
 	/**
      * 新增，插入所有字段
      *
