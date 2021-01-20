@@ -10,7 +10,7 @@
     <!-- 启用spring mvc 注解 -->
     <context:annotation-config/>
     <!-- 设置使用注解的类所在的jar包 -->
-    <context:component-scan base-package="user"/>
+    <context:component-scan base-package="database"/>
     <!-- 完成请求和注解POJO的映射 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
     <!-- 对转向页面的路径解析。prefix：前缀， suffix：后缀 -->
