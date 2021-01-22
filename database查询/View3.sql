@@ -1,5 +1,5 @@
 /*每名教师学生参加助教课程情况（教师名称，助教学生数量，助教课程）。*/
-SELECT  dbo.course.course_name, COUNT(dbo.assistant_chose.assessment_id) AS num, dbo.teacher.teacher_name
+SELECT  dbo.teacher.teacher_name,dbo.course.course_name, COUNT(dbo.assistant_chose.assessment_id) AS num
 FROM     dbo.teacher INNER JOIN
                dbo.instructor ON dbo.teacher.teacher_id = dbo.instructor.teacher_id INNER JOIN
                dbo.teach ON dbo.instructor.instructor_id = dbo.teach.instructor_id INNER JOIN
