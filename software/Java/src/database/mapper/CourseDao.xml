@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="database.dao.CourseDao">
+
+    <resultMap type="database.entity.Course" id="CourseMap">
+        <result property="courseId" column="course_id" jdbcType="VARCHAR"/>
+        <result property="courseName" column="course_name" jdbcType="VARCHAR"/>
+        <result property="courseNature" column="course_nature" jdbcType="VARCHAR"/>
+        <result property="courseStarttime" column="course_starttime" jdbcType="OTHER"/>
+        <result property="courseEndtime" column="course_endtime" jdbcType="OTHER"/>
+        <result property="courseAudience" column="course_audience" jdbcType="VARCHAR"/>
+        <result property="courseStudentnum" column="course_studentnum" jdbcType="INTEGER"/>
+        <result property="courseTeachtime" column="course_teachtime" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CourseMap">
+        select
+          course_id, course_name, course_nature, course_starttime, course_endtime, course_audience, course_studentnum, course_teachtime
+        from dbo.course
+        where course_id = #{courseId}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CourseMap">
+        select
+        course_id, course_name, course_nature, course_starttime, course_endtime, course_audience, course_studentnum,
+        course_teachtime
+        from dbo.course
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="courseId" useGeneratedKeys="true">
+        insert into dbo.course(course_id,course_name, course_nature, course_starttime, course_endtime, course_audience, course_studentnum, course_teachtime)
+        values (#{courseId},#{courseName}, #{courseNature}, #{courseStarttime}, #{courseEndtime}, #{courseAudience}, #{courseStudentnum}, #{courseTeachtime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update dbo.course
+        set course_name = #{courseName},
+                course_nature = #{courseNature},
+                course_starttime = #{courseStarttime},
+                course_endtime = #{courseEndtime},
+                course_audience = #{courseAudience},
+                course_studentnum = #{courseStudentnum},
+                course_teachtime = #{courseTeachtime}
+        where course_id = #{courseId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from dbo.course where course_id = #{courseId}
+    </delete>
+
+</mapper>

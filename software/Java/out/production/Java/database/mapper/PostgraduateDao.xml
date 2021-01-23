@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="database.dao.PostgraduateDao">
+
+    <resultMap type="database.entity.Postgraduate" id="PostgraduateMap">
+        <result property="postgraduateId" column="postgraduate_id" jdbcType="VARCHAR"/>
+        <result property="teacherId" column="teacher_id" jdbcType="VARCHAR"/>
+        <result property="administratorId" column="administrator_id" jdbcType="VARCHAR"/>
+        <result property="postgraduateName" column="postgraduate_name" jdbcType="VARCHAR"/>
+        <result property="postgraduatePhone" column="postgraduate_phone" jdbcType="VARCHAR"/>
+        <result property="postgraduateEmail" column="postgraduate_email" jdbcType="VARCHAR"/>
+        <result property="postgraduateBirth" column="postgraduate_birth" jdbcType="TIMESTAMP"/>
+        <result property="postgraduateSex" column="postgraduate_sex" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="PostgraduateMap">
+        select
+          postgraduate_id, teacher_id, administrator_id, postgraduate_name, postgraduate_phone, postgraduate_email, postgraduate_birth, postgraduate_sex
+        from dbo.postgraduate
+        where postgraduate_id = #{postgraduateId}
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="postgraduateId" useGeneratedKeys="true">
+        insert into dbo.postgraduate(postgraduate_id,teacher_id, administrator_id, postgraduate_name, postgraduate_phone, postgraduate_email, postgraduate_birth, postgraduate_sex)
+        values (#{postgraduateId},#{teacherId}, #{administratorId}, #{postgraduateName}, #{postgraduatePhone}, #{postgraduateEmail}, #{postgraduateBirth}, #{postgraduateSex})
+    </insert>
+
+    <select id="listAll" resultMap="PostgraduateMap">
+        select *from dbo.postgraduate
+    </select>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update dbo.postgraduate
+        set
+                teacher_id = #{teacherId},
+                administrator_id = #{administratorId},
+                postgraduate_name = #{postgraduateName},
+                postgraduate_phone = #{postgraduatePhone},
+                postgraduate_email = #{postgraduateEmail},
+                postgraduate_birth = #{postgraduateBirth},
+                postgraduate_sex = #{postgraduateSex}
+        where postgraduate_id = #{postgraduateId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from dbo.postgraduate where postgraduate_id = #{postgraduateId}
+    </delete>
+
+</mapper>
