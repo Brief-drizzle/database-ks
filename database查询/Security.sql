@@ -75,11 +75,61 @@ CREATE TRIGGER Audit ON DATABASE
 SELECT *
 FROM dbo.AuditLog
 GO
-/*数据库备份*/
-backup database database_english
-to disk='D:\database\database_english.bak';
-/*数据库恢复*/
-restore database database_english
-from disk='D:\database\database_english.bak';
-
-
+--完整备份,每周一次
+USE database_english
+GO
+declare @str varchar(100)
+set @str='D:\DBtext\jgj\DBABak\FullBak'+replace(replace(replace(convert(varchar,getdate(),20),'-',''),' ',''),':','')+'.bak'
+BACKUP DATABASE [database_english] TO DISK=@str
+WITH RETAINDAYS=15,NOFORMAT,NOINIT,
+NAME=N'database_english完整备份',SKIP,NOREWIND,
+NOUNLOAD,STATS=10
+GO
+ 
+/*******************差异备份作业*******************/
+--截断日志
+USE database_english
+GO
+BACKUP LOG Demo  WITH NO_LOG
+GO
+--收缩日志文件
+USE database_english
+GO
+DBCC SHRINKFILE (N'database_english_log',0,TRUNCATEONLY)
+GO
+--差异备份,每天一次
+USE database_english
+GO
+declare @str varchar(100)
+set @str='D:\DBtext\jgj\DBABak\DiffBak'+replace(replace(replace(convert(varchar,getdate(),20),'-',''),' ',''),':','')+'.diff'
+BACKUP DATABASE [database_english] TO DISK=@str
+WITH DIFFERENTIAL,RETAINDAYS=8,NOFORMAT,NOINIT,
+NAME=N'database_english差异备份',SKIP,NOREWIND,
+NOUNLOAD,STATS=10
+GO
+ 
+ 
+/******************日志备份作业*******************/
+--日志备份,每小时一次
+USE database_english
+GO
+declare @str varchar(100)
+set @str='D:\DBtext\jgj\DBABak\logbak'+replace(replace(replace(convert(varchar,getdate(),20),'-',''),' ',''),':','')+'.trn'
+BACKUP LOG [database_english] TO DISK=@str
+WITH RETAINDAYS=3,NOFORMAT,NOINIT,
+NAME=N'database_english日志备份',SKIP,NOREWIND,
+NOUNLOAD,STATS=10
+GO
+ 
+--删除过期的备份文件,每天两次
+declare @str varchar(100),@dir varchar(100),@fileName varchar(30)
+set @dir='del D:\DBtext\jgj\DBABak\'
+set @filename=left(replace(replace(replace(convert(varchar,getdate()-15,20),'-',''),' ',''),':',''),8)
+set @str=@dir+'fullbak'+@filename+'*.bak'
+exec xp_cmdshell @str
+set @filename=left(replace(replace(replace(convert(varchar,getdate()-8,20),'-',''),' ',''),':',''),8)
+set @str=@dir+'diffbak'+@filename+'*.diff'
+exec xp_cmdshell @str
+set @filename=left(replace(replace(replace(convert(varchar,getdate()-8,20),'-',''),' ',''),':',''),8)
+set @str=@dir+'logbak'+@filename+'*.trn'
+exec xp_cmdshell @str
