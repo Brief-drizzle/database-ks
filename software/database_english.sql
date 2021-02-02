@@ -54,6 +54,7 @@ create table academic_exchange
         constraint FK_ACADEMIC_DIRECTOR__DIRECTOR
             references director,
     academic_exchange_name varchar(256) not null,
+	academic_time          date not null,
     report_englishname     varchar(256) not null,
     report_chinesename     varchar(256) not null,
     country                varchar(256),
@@ -84,8 +85,8 @@ create index director_academic_FK
     on academic_exchange (director_id)
 go
 
-INSERT INTO database_english.dbo.academic_exchange (academic_exchange_id, administrator_id, postgraduate_id, tutor_id, director_id, academic_exchange_name, report_englishname, report_chinesename, country, province, city, quality, activity_photo, others, audit_status, tutor_audit_time, director_audit_time) VALUES ('j0000001  ', 'g000000001', 'y000000001', 'd000000001', 'f000000001', '活动1', 'name1', '名字1', '中国', '北京', '北京', 1, '照片1', '其他备注', 1, '2020-10-08 21:37:15.000', '2020-10-12 21:37:24.000');
-INSERT INTO database_english.dbo.academic_exchange (academic_exchange_id, administrator_id, postgraduate_id, tutor_id, director_id, academic_exchange_name, report_englishname, report_chinesename, country, province, city, quality, activity_photo, others, audit_status, tutor_audit_time, director_audit_time) VALUES ('j0000002  ', 'g000000003', 'y000000003', 'd000000003', 'f000000003', '活动3', 'name3', '名字3', '中国', '北京', '北京', 1, '照片2', '其他备注', 1, '2020-10-08 21:40:23.000', '2020-10-12 21:40:30.000');
+INSERT INTO database_english.dbo.academic_exchange (academic_exchange_id, administrator_id, postgraduate_id, tutor_id, director_id, academic_exchange_name, academic_time, report_englishname, report_chinesename, country, province, city, quality, activity_photo, others, audit_status, tutor_audit_time, director_audit_time) VALUES ('j0000001  ', 'g000000001', 'y000000001', 'd000000001', 'f000000001', '活动1', 2020-01-19,'name1', '名字1', '英国', '伦敦', '伦敦', 1, '照片1', '其他备注', 1, '2020-10-08 21:37:15.000', '2020-10-12 21:37:24.000');
+INSERT INTO database_english.dbo.academic_exchange (academic_exchange_id, administrator_id, postgraduate_id, tutor_id, director_id, academic_exchange_name, academic_time, report_englishname, report_chinesename, country, province, city, quality, activity_photo, others, audit_status, tutor_audit_time, director_audit_time) VALUES ('j0000002  ', 'g000000003', 'y000000003', 'd000000003', 'f000000003', '活动3', 2020-03-17,'name3', '名字3', '中国', '北京', '北京', 1, '照片2', '其他备注', 1, '2020-10-08 21:40:23.000', '2020-10-12 21:40:30.000');
 create table administrators
 (
     administrator_id    char(10)     not null
